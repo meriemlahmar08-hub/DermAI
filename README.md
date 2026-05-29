@@ -1,4 +1,4 @@
-# 🩺 DermAI
+# 🔬 DermAI
 
 Flask web app for AI-powered skin lesion classification (Malignant/Benign) using a fine-tuned VGG16 model, with patient management dashboard and MySQL storage.
 
@@ -9,6 +9,15 @@ Flask web app for AI-powered skin lesion classification (Malignant/Benign) using
 - 🖼️ Image upload and VGG16-powered prediction with confidence score
 - 🗃️ Patient records management with full history
 - 📅 Daily/weekly analysis tracking
+  
+## 🧠 How It Works
+
+1. The user logs in and navigates to the **Predict** page
+2. They enter the patient's name, age, and upload a skin lesion image
+3. The image is preprocessed (resized to 224×224, normalized) and fed into the VGG16 model
+4. The model outputs a probability score — above 0.5 → **Malignant**, below → **Benign**
+5. The result is saved to the database and displayed with the confidence percentage
+6. The dashboard updates automatically to reflect the new case
 
 ## 🛠️ Tech Stack
 
@@ -20,5 +29,9 @@ Flask web app for AI-powered skin lesion classification (Malignant/Benign) using
 | Image Processing | NumPy + Keras utils |
 ## ⚠️ Disclaimer
 
-For research and educational purposes only. Not a substitute for professional medical diagnosis.
+This tool is intended for **research and educational purposes only**. It is not a substitute for professional medical diagnosis. Always consult a qualified dermatologist for medical advice.
+
+
+
+
 
