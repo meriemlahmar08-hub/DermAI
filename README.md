@@ -1,6 +1,9 @@
-# 🔬 DermAI
+#  DermAI 🔬
 
 Flask web app for AI-powered skin lesion classification (Malignant/Benign) using a fine-tuned VGG16 model, with patient management dashboard and MySQL storage.
+## Demo
+<img width="800" height="366" alt="Enregistrementdelcran2026-05-30001251-ezgif com-video-to-gif-converter" src="https://github.com/user-attachments/assets/ea34d46d-7cf0-4fe8-bef5-c4a024559e09" />
+
 
 ## Features
 
