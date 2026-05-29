@@ -18,5 +18,7 @@ Flask web app for AI-powered skin lesion classification (Malignant/Benign) using
 | AI Model | VGG16 via Keras / TensorFlow |
 | Database | MySQL / MariaDB |
 | Image Processing | NumPy + Keras utils |
+## ⚠️ Disclaimer
 
+For research and educational purposes only. Not a substitute for professional medical diagnosis.
 
