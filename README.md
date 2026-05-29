@@ -2,7 +2,7 @@
 
 Flask web app for AI-powered skin lesion classification (Malignant/Benign) using a fine-tuned VGG16 model, with patient management dashboard and MySQL storage.
 
-## ✨ Features
+## Features
 
 - 🔐 Secure login with session-based authentication
 - 📊 Dashboard with real-time statistics (total cases, malignant/benign ratio, weekly trend)
@@ -10,7 +10,7 @@ Flask web app for AI-powered skin lesion classification (Malignant/Benign) using
 - 🗃️ Patient records management with full history
 - 📅 Daily/weekly analysis tracking
   
-## 🧠 How It Works
+##  How It Works
 
 1. The user logs in and navigates to the **Predict** page
 2. They enter the patient's name, age, and upload a skin lesion image
@@ -19,7 +19,7 @@ Flask web app for AI-powered skin lesion classification (Malignant/Benign) using
 5. The result is saved to the database and displayed with the confidence percentage
 6. The dashboard updates automatically to reflect the new case
 
-## 🛠️ Tech Stack
+##  Tech Stack
 
 | Layer | Technology |
 |-------|-----------|
