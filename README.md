@@ -1,8 +1,14 @@
 #  DermAI 🔬
 
 Flask web app for AI-powered skin lesion classification (Malignant/Benign) using a fine-tuned VGG16 model, with patient management dashboard and MySQL storage.
-## Demo
-<img width="800" height="366" alt="Enregistrementdelcran2026-05-30001251-ezgif com-video-to-gif-converter" src="https://github.com/user-attachments/assets/ea34d46d-7cf0-4fe8-bef5-c4a024559e09" />
+## Screenshots
+<img width="1823" height="854" alt="image" src="https://github.com/user-attachments/assets/b6f8bf1b-81ab-4c03-89da-ca883d5f7c5f" />
+<img width="1909" height="883" alt="image" src="https://github.com/user-attachments/assets/2bca694f-7416-405d-a80c-0809c1c30026" />
+<img width="1801" height="756" alt="image" src="https://github.com/user-attachments/assets/7afe2aef-5c17-4966-868b-9f32a17d7b4a" />
+<img width="1889" height="866" alt="image" src="https://github.com/user-attachments/assets/b0947eb9-00f5-444b-a5b7-49baf99d6b8d" />
+<img width="1908" height="869" alt="image" src="https://github.com/user-attachments/assets/19b33dc8-82e9-4d12-8b13-232d18abf30e" />
+<img width="1918" height="875" alt="image" src="https://github.com/user-attachments/assets/bf11ede2-88f9-442f-b6bb-161ce26be9c2" />
+<img width="1750" height="771" alt="image" src="https://github.com/user-attachments/assets/a42f0e2a-ccfd-4875-bf5a-7be886a4411c" />
 
 
 ## Features
