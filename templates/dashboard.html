@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DermAI — Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar">
+  <a href="/dashboard" class="navbar-brand">
+    <span class="brand-dot"></span>DermAI
+  </a>
+  <div class="navbar-nav">
+    <span class="db-badge">{{ session['user'] }}</span>
+    <a href="/logout" class="btn btn-danger">
+      <i class="ti ti-logout"></i> Logout
+    </a>
+  </div>
+</nav>
+
+<div class="container-wide">
+
+  <div class="dashboard-hero">
+    <h2>Bonjour, <span>{{ session['user'] }}</span></h2>
+    <p>Système de diagnostic dermatologique IA</p>
+  </div>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for cat, msg in messages %}
+      <div class="alert alert-{{ cat }}">{{ msg }}</div>
+    {% endfor %}
+  {% endwith %}
+
+  <div class="action-grid">
+    <a href="/predict" class="action-card">
+      <span class="card-icon">🔬</span>
+      <h3>Nouvelle Analyse</h3>
+      <p>Soumettre une image de lésion cutanée pour diagnostic IA</p>
+      <span class="card-arrow">→</span>
+    </a>
+    <a href="/patients" class="action-card">
+      <span class="card-icon">📋</span>
+      <h3>Historique Patients</h3>
+      <p>Consulter tous les diagnostics enregistrés</p>
+      <span class="card-arrow">→</span>
+    </a>
+  </div>
+
+  <!-- ───────── STATISTIQUES GLOBALES ───────── -->
+  <div class="stats-section">
+
+    <div class="stats-header">
+      <span class="stats-arrow">→</span>
+      <h3 class="stats-title">Statistiques Globales</h3>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat-card total">
+        <div class="stat-label">🧪 Total Analyses</div>
+        <div class="stat-value">{{ stats.total }}</div>
+        <div class="stat-sub">depuis le début</div>
+      </div>
+      <div class="stat-card malignant">
+        <div class="stat-label">⚠️ Malignant</div>
+        <div class="stat-value">{{ stats.malignant }}</div>
+        <div class="stat-sub">{{ stats.malignant_pct }}% des cas</div>
+      </div>
+      <div class="stat-card benign">
+        <div class="stat-label">✅ Bénin</div>
+        <div class="stat-value">{{ stats.benign }}</div>
+        <div class="stat-sub">{{ stats.benign_pct }}% des cas</div>
+      </div>
+      
+    </div>
+
+    <div class="chart-section">
+      <div class="chart-title">Répartition des Diagnostics</div>
+     <div class="chart-body">
+  <div class="donut-wrapper">
+    <svg width="110" height="110" viewBox="0 0 110 110" style="transform:rotate(-90deg)">
+      <circle cx="55" cy="55" r="42" fill="none" stroke="#f0ece8" stroke-width="14"/>
+      <circle cx="55" cy="55" r="42" fill="none"
+        stroke="#2dd4bf" stroke-width="14"
+        stroke-dasharray="{{ (stats.benign_pct / 100) * 263.9 }} {{ 263.9 - (stats.benign_pct / 100) * 263.9 }}"
+        stroke-dashoffset="0"/>
+      <circle cx="55" cy="55" r="42" fill="none"
+        stroke="#f43f5e" stroke-width="14"
+        stroke-dasharray="{{ (stats.malignant_pct / 100) * 263.9 }} {{ 263.9 - (stats.malignant_pct / 100) * 263.9 }}"
+        stroke-dashoffset="-{{ (stats.benign_pct / 100) * 263.9 }}"/>
+    </svg>
+    <div class="donut-center">
+      <span class="donut-val">{{ stats.total }}</span>
+      <span class="donut-label">total</span>
+    </div>
+  </div>
+  <div class="legend">
+    <div class="legend-item">
+      <div class="legend-left">
+        <span class="legend-dot" style="background:#2dd4bf"></span>
+        <span class="legend-name">Bénin</span>
+      </div>
+      <span class="legend-val">{{ stats.benign }} ({{ stats.benign_pct }}%)</span>
+    </div>
+    <div class="legend-item">
+      <div class="legend-left">
+        <span class="legend-dot" style="background:#f43f5e"></span>
+        <span class="legend-name">Malignant</span>
+      </div>
+      <span class="legend-val">{{ stats.malignant }} ({{ stats.malignant_pct }}%)</span>
+    </div>
+  </div>
+</div>
+
+  <!-- ───────── FIN STATISTIQUES ───────── -->
+
+</div>
+
+<style>
+  .stats-section {
+    margin-top: 36px;
+    padding-bottom: 40px;
+  }
+
+  .stats-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .stats-arrow { font-size: 18px; color: #3b82f6; }
+
+  .stats-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    margin: 0;
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .stat-card {
+    background: #fff;
+    border: 1.5px solid #e8e4df;
+    border-radius: 14px;
+    padding: 22px 20px 18px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+  }
+
+  .stat-card.total::before     { background: #3b82f6; }
+  .stat-card.malignant::before { background: #f43f5e; }
+  .stat-card.benign::before    { background: #2dd4bf; }
+  .stat-card.today::before     { background: #f59e0b; }
+
+  .stat-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #888;
+    margin-bottom: 10px;
+  }
+
+  .stat-value {
+    font-family: 'Syne', sans-serif;
+    font-size: 40px;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .stat-card.total .stat-value     { color: #3b82f6; }
+  .stat-card.malignant .stat-value { color: #f43f5e; }
+  .stat-card.benign .stat-value    { color: #2dd4bf; }
+  .stat-card.today .stat-value     { color: #f59e0b; }
+
+  .stat-sub { font-size: 12px; color: #888; }
+
+  .chart-section {
+    background: #fff;
+    border: 1.5px solid #e8e4df;
+    border-radius: 14px;
+    padding: 24px 20px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+
+  .chart-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .chart-body { display: flex; align-items: center; gap: 28px; }
+
+  .donut-wrapper {
+    position: relative;
+    flex-shrink: 0;
+    width: 110px;
+    height: 110px;
+  }
+
+  .donut-center {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .donut-val {
+    font-family: 'Syne', sans-serif;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1;
+  }
+
+  .donut-label { font-size: 10px; color: #888; margin-top: 2px; }
+
+  .legend { flex: 1; display: flex; flex-direction: column; gap: 12px; }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .legend-left { display: flex; align-items: center; gap: 8px; }
+
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .legend-name { font-size: 13px; }
+
+  .legend-val {
+    font-family: 'Syne', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #888;
+    white-space: nowrap;
+  }
+</style>
+<style>
+      .stats-title, .chart-title { color: #1a1a1a !important; }
+      .stat-label   { color: #555 !important; }
+      .stat-sub     { color: #666 !important; }
+      .legend-name  { color: #1a1a1a !important; }
+      .legend-val   { color: #444 !important; }
+      .donut-val    { color: #1a1a1a !important; }
+      .donut-label  { color: #666 !important; }
+      .stats-arrow  { color: #3b82f6 !important; }
+    </style>
+
+</body>
+</html>

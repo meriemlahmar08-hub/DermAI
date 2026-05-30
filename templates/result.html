@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DermAI — Résultat</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<nav class="navbar">
+  <a href="/dashboard" class="navbar-brand">
+    <span class="brand-dot"></span>DermAI
+  </a>
+  <div class="navbar-nav">
+    <a href="/dashboard" class="btn btn-outline">← Dashboard</a>
+  </div>
+</nav>
+
+<div class="container" style="max-width:580px;padding-top:3rem;">
+  <div class="card result-card">
+    <p class="result-label">Résultat du diagnostic IA</p>
+    <div class="result-badge {{ 'malignant' if result == 'Malignant' else 'benign' }}">
+      {{ '⚠️ Malignant' if result == 'Malignant' else '✅ Bénin' }}
+    </div>
+    <div class="confidence-wrap">
+      <div class="confidence-label">
+        <span>Indice de confiance</span>
+        <span><strong>{{ prob }}%</strong></span>
+      </div>
+      <div class="confidence-bar">
+        <div class="confidence-fill" style="width:{{ prob }}%;
+          background:{{ 'linear-gradient(90deg,#ff4d6d,#c9003c)' if result == 'Malignant' else 'linear-gradient(90deg,#00d4b4,#00a896)' }};"></div>
+      </div>
+    </div>
+    <img src="{{ img }}" class="result-image" alt="Lésion analysée">
+    <hr class="divider">
+    <div class="result-actions">
+      <a href="/predict" class="btn btn-outline">🔄 Nouvelle analyse</a>
+      <a href="/patients" class="btn btn-info">📋 Patients</a>
+      <a href="/dashboard" class="btn btn-primary">Dashboard →</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DermAI — Analyse</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<nav class="navbar">
+  <a href="/dashboard" class="navbar-brand">
+    <span class="brand-dot"></span>DermAI
+  </a>
+  <div class="navbar-nav">
+    <span class="user-chip">👤 {{ session['user'] }}</span>
+    <a href="/dashboard" class="btn btn-outline">← Retour</a>
+  </div>
+</nav>
+
+<div class="container-wide" style="max-width:880px;">
+  <div class="page-header" style="margin-top:2rem;">
+    <h2>🧬 Analyse Patient</h2>
+  </div>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% for cat, msg in messages %}
+      <div class="alert alert-{{ cat }}">{{ msg }}</div>
+    {% endfor %}
+  {% endwith %}
+
+  <div class="predict-layout">
+    <div class="card">
+      <form method="POST" enctype="multipart/form-data">
+        <div class="form-group">
+          <label class="form-label">Nom du patient</label>
+          <input class="form-control" type="text" name="name" placeholder="Ex : Ahmed Ben Ali" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Âge</label>
+          <input class="form-control" type="number" name="age" placeholder="Ex : 42" min="1" max="120" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Image de la lésion</label>
+          <input class="form-control" type="file" name="image" accept="image/*" required>
+        </div>
+        <hr class="divider">
+        <button type="submit" class="btn btn-success btn-lg">Lancer l'analyse →</button>
+      </form>
+    </div>
+
+    <div class="predict-info">
+      <h3>Instructions</h3>
+      <ul>
+        <li>Utilisez une image nette et bien éclairée</li>
+        <li>Format accepté : JPG, PNG, WEBP</li>
+        <li>La lésion doit être bien centrée</li>
+        <li>Évitez les reflets et ombres fortes</li>
+        <li>Le modèle VGG16 analyse en 224×224 px</li>
+        <li>Résultat en quelques secondes</li>
+      </ul>
+      <hr class="divider">
+      <p style="font-size:0.78rem;color:var(--text-muted);">
+        ⚠️ Ce diagnostic est indicatif et ne remplace pas l'avis d'un médecin spécialiste.
+      </p>
+    </div>
+  </div>
+</div>
+</body>
+</html>

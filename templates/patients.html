@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DermAI — Patients</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<nav class="navbar">
+  <a href="/dashboard" class="navbar-brand">
+    <span class="brand-dot"></span>DermAI
+  </a>
+  <div class="navbar-nav">
+    <a href="/predict" class="btn btn-primary">+ Nouvelle analyse</a>
+    <a href="/dashboard" class="btn btn-outline">Dashboard</a>
+  </div>
+</nav>
+
+<div class="container-wide">
+  <div class="page-header" style="margin-top:2rem;">
+    <h2>📋 Historique Patients</h2>
+    <span style="color:var(--text-secondary);font-size:0.85rem;">Résultats triés par date</span>
+  </div>
+
+  {% if patients %}
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Patient</th><th>Âge</th><th>Diagnostic</th>
+          <th>Confiance</th><th>Image</th><th>Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in patients %}
+        <tr>
+          <td><strong>{{ p.name }}</strong></td>
+          <td>{{ p.age }} ans</td>
+          <td>
+            <span class="badge {{ 'badge-malignant' if p.result == 'Malignant' else 'badge-benign' }}">
+              {{ '⚠️ ' + p.result if p.result == 'Malignant' else '✅ ' + p.result }}
+            </span>
+          </td>
+          <td>{{ (p.probability * 100) | round(1) }}%</td>
+          <td><img src="{{ p.image_path }}" class="patient-img" alt="lésion"></td>
+          <td style="color:var(--text-secondary);font-size:0.82rem;">
+            {{ p.created_at.strftime('%d/%m/%Y %H:%M') if p.created_at else '—' }}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  {% else %}
+  <div class="card empty-state">
+    <span>🗂️</span>
+    <p>Aucun patient enregistré pour le moment.</p>
+    <a href="/predict" class="btn btn-primary">Commencer une analyse →</a>
+  </div>
+  {% endif %}
+</div>
+</body>
+</html>
