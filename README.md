@@ -20,7 +20,8 @@ Flask web app for AI-powered skin lesion classification (Malignant/Benign) using
 - 📅 Daily/weekly analysis tracking
   
 ##  How It Works
-
+>Open your browser at `http://127.0.0.1:5000`
+> 🔑 Default credentials: **username:** `admin` / **password:** `1234`
 1. The user logs in and navigates to the **Predict** page
 2. They enter the patient's name, age, and upload a skin lesion image
 3. The image is preprocessed (resized to 224×224, normalized) and fed into the VGG16 model
